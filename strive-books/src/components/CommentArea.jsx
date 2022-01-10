@@ -12,24 +12,26 @@ class CommentArea extends Component {
         isError: false
     }
 
-    componentDidMount = async () => {
-        try {
-            let response = await fetch('https://striveschool-api.herokuapp.com/api/comments/' + this.props.asin, {
-                headers: {
-                    Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTRiMjFmMTRiYjUzZDAwMTViMTllZDciLCJpYXQiOjE2NDE4MjIyMjQsImV4cCI6MTY0MzAzMTgyNH0.FhBfi1iCANr52V4vFI9jP1bs_nduCbOa8Ym3h3DfF6Q'
+    componentDidUpdate = async (prevProps) => {
+        if (prevProps.asin !== this.props.asin) {
+            try {
+                let response = await fetch('https://striveschool-api.herokuapp.com/api/comments/' + this.props.asin, {
+                    headers: {
+                        Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTRiMjFmMTRiYjUzZDAwMTViMTllZDciLCJpYXQiOjE2NDE4MjIyMjQsImV4cCI6MTY0MzAzMTgyNH0.FhBfi1iCANr52V4vFI9jP1bs_nduCbOa8Ym3h3DfF6Q'
+                    }
+                })
+                console.log(response)
+                if (response.ok) {
+                    let comments = await response.json()
+                    this.setState({ comments: comments, isLoading: false, isError: false })
+                } else {
+                    console.log('error')
+                    this.setState({ isLoading: false, isError: true })
                 }
-            })
-            console.log(response)
-            if (response.ok) {
-                let comments = await response.json()
-                this.setState({ comments: comments, isLoading: false, isError: false })
-            } else {
-                console.log('error')
+            } catch (error) {
+                console.log(error)
                 this.setState({ isLoading: false, isError: true })
             }
-        } catch (error) {
-            console.log(error)
-            this.setState({ isLoading: false, isError: true })
         }
     }
 

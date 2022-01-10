@@ -34,14 +34,13 @@ class BookList extends React.Component {
                                     <Col xs={3} key={b.asin} >
                                         <SingleBook book={b} alterClickedBook={asin => this.setState({
                                             clickedBook: asin
-                                        })}/>
+                                        })} />
                                     </Col>
                                 ))
                             }
                         </Row>
                     </Col>
                     <Col md={3}>
-                        Comment area
                         <CommentArea asin={this.state.clickedBook} />
                     </Col>
                 </Row>

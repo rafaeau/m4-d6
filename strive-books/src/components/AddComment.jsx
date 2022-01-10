@@ -23,7 +23,6 @@ class AddComment extends Component {
                 }
             })
             if (response.ok) {
-                // the comment has been sent succesfully!!
                 alert('Comment was sent!')
             } else {
                 console.log('error')
